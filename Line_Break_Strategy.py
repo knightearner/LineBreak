@@ -43,8 +43,8 @@ def Line_Break():
         if df['uptrend'][i] not in [True, False]:
             df['uptrend'][i] = df['uptrend'][i - 1]
 
-    Nifty_Future_Code=51951
-    Nifty_Future_Lot=50
+    Nifty_Future_Code=51419361
+    Nifty_Future_Lot=100
 
     try:
         print(str(datetime.now(tz_Ind)))
