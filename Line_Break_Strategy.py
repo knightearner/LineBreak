@@ -68,5 +68,6 @@ def Line_Break():
 
 if __name__=='__main__':
     while True:
-        Line_Break()
-        time.sleep(10)
+        if datetime.datetime.now().minute%5==0:
+            Line_Break()
+            time.sleep(280)
