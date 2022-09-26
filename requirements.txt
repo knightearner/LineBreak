@@ -1,3 +1,4 @@
 pandas==1.4.2
 py5paisa==0.5.7
 stocktrends==0.1.5
+pytz==2022.1
