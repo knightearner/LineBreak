@@ -3,6 +3,7 @@ from datetime import *
 from stocktrends import indicators
 import pandas as pd
 import time
+import pytz
 
 def Line_Break():
 
@@ -17,10 +18,9 @@ def Line_Break():
 
     client = FivePaisaClient(email="mondaldebojit21@gmail.com", passwd="Rintu!1995", dob="19951021", cred=cred)
     client.login()
-
-
-
-    today = date.today()
+    
+    tz_Ind = pytz.timezone('Asia/Kolkata')
+    today = datetime.now(tz_Ind).date()
 
     end = str(today)
     start = str(today - timedelta(days=5))
@@ -47,15 +47,15 @@ def Line_Break():
     Nifty_Future_Lot=50
 
     try:
-        print(str(today))
+        print(str(datetime.now(tz_Ind)))
 
         if (df['uptrend'][len(df) - 1] != df['uptrend'][len(df) - 2]) and df['uptrend'][len(df) - 1] == True:
             client.place_order(OrderType='B', Exchange='N', ExchangeType='D', ScripCode=Nifty_Future_Code, Qty=Nifty_Future_Lot, Price=0)
-            print(str(today), ' BUY @ ')
+            print(str(datetime.now(tz_Ind)), ' BUY @ ')
 
         elif (df['uptrend'][len(df) - 1] != df['uptrend'][len(df) - 2]) and df['uptrend'][len(df) - 1] == False:
             client.place_order(OrderType='S', Exchange='N', ExchangeType='D', ScripCode=Nifty_Future_Code, Qty=Nifty_Future_Lot, Price=0)
-            print(str(today), 'SELL @ ')
+            print(str(datetime.now(tz_Ind)), 'SELL @ ')
 
         else:
             print('NO order Placed')
@@ -68,6 +68,6 @@ def Line_Break():
 
 if __name__=='__main__':
     while True:
-        if datetime.datetime.now().minute%5==0:
+        if datetime.now(pytz.timezone('Asia/Kolkata')).minute%5==0:
             Line_Break()
             time.sleep(280)
