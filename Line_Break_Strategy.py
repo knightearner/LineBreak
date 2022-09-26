@@ -69,5 +69,9 @@ def Line_Break():
 if __name__=='__main__':
     while True:
         if datetime.now(pytz.timezone('Asia/Kolkata')).minute%5==0:
-            Line_Break()
-            time.sleep(280)
+            if datetime.now(pytz.timezone('Asia/Kolkata')).hour==9 and datetime.now(pytz.timezone('Asia/Kolkata')).minute>=15:
+                Line_Break()
+                time.sleep(280)
+            elif datetime.now(pytz.timezone('Asia/Kolkata')).hour>9 and datetime.now(pytz.timezone('Asia/Kolkata')).hour<16:
+                Line_Break()
+                time.sleep(280)
