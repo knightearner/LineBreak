@@ -1,9 +1,9 @@
 from py5paisa import *
 from datetime import *
-from stocktrends import indicators
-import pandas as pd
-import time
 import pytz
+import easyimap as e
+
+
 
 def Line_Break():
 
@@ -18,52 +18,58 @@ def Line_Break():
 
     client = FivePaisaClient(email="mondaldebojit21@gmail.com", passwd="Rintu!1995", dob="19951021", cred=cred)
     client.login()
-    
-    tz_Ind = pytz.timezone('Asia/Kolkata')
-    today = datetime.now(tz_Ind).date()
 
-    end = str(today)
-    start = str(today - timedelta(days=5))
+    buy_email_='buy_knightearner@outlook.com'
+    sell_email_='mondaldebojit21@outlook.com'
 
-    df = client.historical_data('N', 'C', 999920000, '5m', start, end)
+    buy_password='Debojit@1995'
+    sell_password='Rintu!1995'
 
-    df.rename(columns={
-        'Open': 'open',
-        'High': 'high',
-        'Low': 'low',
-        'Close': 'close',
-        'Datetime': 'date'
-    }, inplace=True)
+    server_buy=e.connect('outlook.office365.com',buy_email_,buy_password)
+    server_sell=e.connect('outlook.office365.com',sell_email_,sell_password)
 
-    lb = indicators.LineBreak(df)
-    lb.line_number = 3
-    data = lb.get_ohlc_data()
-    df = pd.merge(df, data[['date', 'uptrend']], on='date', how='outer')
-    for i in range(len(df)):
-        if df['uptrend'][i] not in [True, False]:
-            df['uptrend'][i] = df['uptrend'][i - 1]
+    email_buy=server_buy.mail(server_buy.listids()[0])
+    email_sell=server_sell.mail(server_sell.listids()[0])
+
+
+    format = '%d %b %Y %H:%M'  # The format
+    time_buy= datetime.strptime(email_buy.date[5:22], format)
+    time_sell= datetime.strptime(email_sell.date[5:22], format)
+
+    time_now=datetime.now(pytz.timezone('UTC'))
+
+    flag=''
+    if time_now.date()==time_sell.date() and time_now.minute==time_sell.minute and time_now.hour==time_sell.hour and email_sell.title[7:]=='SELL':
+        flag='SELL'
+    elif time_now.date()==time_buy.date() and time_now.minute==time_buy.minute and time_now.hour==time_buy.hour and email_buy.title[7:]=='BUY':
+        flag='BUY'
+    else:
+        flag=''
 
     Nifty_Future_Code=51419361
-    Nifty_Future_Lot=100
+    Nifty_Future_Lot=50
 
-    try:
-        print(str(datetime.now(tz_Ind)))
+    print(str(datetime.now(pytz.timezone('Asia/Kolkata'))))
 
-        if (df['uptrend'][len(df) - 1] != df['uptrend'][len(df) - 2]) and df['uptrend'][len(df) - 1] == True:
+    if flag=='BUY':
+        email_compare = server_buy.mail(server_buy.listids()[1])
+
+        format = '%d %b %Y %H:%M'  # The format
+        time_compare = datetime.strptime(email_compare.date[5:22], format)
+        if (time_compare+timedelta(minutes=5))!=time_buy and email_compare.title[7:] == 'BUY':
             client.place_order(OrderType='B', Exchange='N', ExchangeType='D', ScripCode=Nifty_Future_Code, Qty=Nifty_Future_Lot, Price=0)
-            print(str(datetime.now(tz_Ind)), ' BUY @ ')
+            client.place_order(OrderType='B', Exchange='N', ExchangeType='D', ScripCode=Nifty_Future_Code, Qty=Nifty_Future_Lot, Price=0)
+            print(' BUY ')
 
-        elif (df['uptrend'][len(df) - 1] != df['uptrend'][len(df) - 2]) and df['uptrend'][len(df) - 1] == False:
+    elif flag=='SELL':
+        email_compare = server_sell.mail(server_sell.listids()[1])
+
+        format = '%d %b %Y %H:%M'  # The format
+        time_compare = datetime.strptime(email_compare.date[5:22], format)
+        if (time_compare+timedelta(minutes=5))!=time_sell and email_compare.title[7:] == 'SELL':
             client.place_order(OrderType='S', Exchange='N', ExchangeType='D', ScripCode=Nifty_Future_Code, Qty=Nifty_Future_Lot, Price=0)
-            print(str(datetime.now(tz_Ind)), 'SELL @ ')
-
-        else:
-            print('NO order Placed')
-
-    except Exception as e:
-        print(str(e))
-
-
+            client.place_order(OrderType='S', Exchange='N', ExchangeType='D', ScripCode=Nifty_Future_Code, Qty=Nifty_Future_Lot, Price=0)
+            print(' SELL ')
 
 
 if __name__=='__main__':
