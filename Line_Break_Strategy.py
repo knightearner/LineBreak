@@ -54,7 +54,7 @@ def Line_Break():
 
     if flag=='BUY':
 
-        if client.positions()[0]['BodQty']<0:
+        if client.positions()[0]['NetQty']<0:
             client.place_order(OrderType='B', Exchange='N', ExchangeType='D', ScripCode=Nifty_Future_Code, Qty=Nifty_Future_Lot, Price=0)
             time.sleep(2)
             client.place_order(OrderType='B', Exchange='N', ExchangeType='D', ScripCode=Nifty_Future_Code, Qty=Nifty_Future_Lot, Price=0)
@@ -62,7 +62,7 @@ def Line_Break():
 
     elif flag=='SELL':
 
-        if client.positions()[0]['BodQty']>0:
+        if client.positions()[0]['NetQty']>0:
             client.place_order(OrderType='S', Exchange='N', ExchangeType='D', ScripCode=Nifty_Future_Code, Qty=Nifty_Future_Lot, Price=0)
             time.sleep(2)
             client.place_order(OrderType='S', Exchange='N', ExchangeType='D', ScripCode=Nifty_Future_Code, Qty=Nifty_Future_Lot, Price=0)
