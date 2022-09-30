@@ -18,6 +18,7 @@ def Line_Break():
 
     client = FivePaisaClient(email="mondaldebojit21@gmail.com", passwd="Rintu!1995", dob="19951021", cred=cred)
     client.login()
+    time.sleep(5)
 
     buy_email_='buy_knightearner@outlook.com'
     sell_email_='mondaldebojit21@outlook.com'
