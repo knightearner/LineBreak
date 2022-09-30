@@ -52,22 +52,18 @@ def Line_Break():
     print(str(datetime.now(pytz.timezone('Asia/Kolkata'))))
 
     if flag=='BUY':
-        email_compare = server_buy.mail(server_buy.listids()[1])
 
-        format = '%d %b %Y %H:%M'  # The format
-        time_compare = datetime.strptime(email_compare.date[5:22], format)
-        if (time_compare+timedelta(minutes=5))!=time_buy and email_compare.title[7:] == 'BUY':
+        if client.positions()[0]['BodQty']<0:
             client.place_order(OrderType='B', Exchange='N', ExchangeType='D', ScripCode=Nifty_Future_Code, Qty=Nifty_Future_Lot, Price=0)
+            time.sleep(2)
             client.place_order(OrderType='B', Exchange='N', ExchangeType='D', ScripCode=Nifty_Future_Code, Qty=Nifty_Future_Lot, Price=0)
             print(' BUY ')
 
     elif flag=='SELL':
-        email_compare = server_sell.mail(server_sell.listids()[1])
 
-        format = '%d %b %Y %H:%M'  # The format
-        time_compare = datetime.strptime(email_compare.date[5:22], format)
-        if (time_compare+timedelta(minutes=5))!=time_sell and email_compare.title[7:] == 'SELL':
+        if client.positions()[0]['BodQty']>0:
             client.place_order(OrderType='S', Exchange='N', ExchangeType='D', ScripCode=Nifty_Future_Code, Qty=Nifty_Future_Lot, Price=0)
+            time.sleep(2)
             client.place_order(OrderType='S', Exchange='N', ExchangeType='D', ScripCode=Nifty_Future_Code, Qty=Nifty_Future_Lot, Price=0)
             print(' SELL ')
 
