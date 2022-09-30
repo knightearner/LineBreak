@@ -7,19 +7,8 @@ import time
 
 def Line_Break():
 
-    cred = {
-        "APP_NAME": "5P51419361",
-        "APP_SOURCE": "11179",
-        "USER_ID": "FKTvPb6GrxX",
-        "PASSWORD": "Rf7SoLvxXcj",
-        "USER_KEY": "LCHhAHfRrkeDwQkjHyGtQGFmBkl1h50T",
-        "ENCRYPTION_KEY": "c5yN3Ny1k4zj272fI40YDzHrF4Q1dics"
-    }
-
-    client = FivePaisaClient(email="mondaldebojit21@gmail.com", passwd="Rintu!1995", dob="19951021", cred=cred)
-    client.login()
     time.sleep(15)
-
+    
     buy_email_='buy_knightearner@outlook.com'
     sell_email_='mondaldebojit21@outlook.com'
 
@@ -51,7 +40,20 @@ def Line_Break():
     Nifty_Future_Lot=50
     print('Flag Status: ',flag)
     print(str(datetime.now(pytz.timezone('Asia/Kolkata'))))
+    
+    if flag in ['BUY','SELL']:
+        cred = {
+        "APP_NAME": "5P51419361",
+        "APP_SOURCE": "11179",
+        "USER_ID": "FKTvPb6GrxX",
+        "PASSWORD": "Rf7SoLvxXcj",
+        "USER_KEY": "LCHhAHfRrkeDwQkjHyGtQGFmBkl1h50T",
+        "ENCRYPTION_KEY": "c5yN3Ny1k4zj272fI40YDzHrF4Q1dics"
+    }
 
+    client = FivePaisaClient(email="mondaldebojit21@gmail.com", passwd="Rintu!1995", dob="19951021", cred=cred)
+    client.login()
+    
     if flag=='BUY':
 
         if client.positions()[0]['NetQty']<0:
