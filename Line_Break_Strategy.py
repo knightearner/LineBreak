@@ -18,7 +18,7 @@ def Line_Break():
 
     client = FivePaisaClient(email="mondaldebojit21@gmail.com", passwd="Rintu!1995", dob="19951021", cred=cred)
     client.login()
-    time.sleep(5)
+    time.sleep(15)
 
     buy_email_='buy_knightearner@outlook.com'
     sell_email_='mondaldebojit21@outlook.com'
@@ -49,7 +49,7 @@ def Line_Break():
 
     Nifty_Future_Code=51419361
     Nifty_Future_Lot=50
-
+    print('Flag Status: ',flag)
     print(str(datetime.now(pytz.timezone('Asia/Kolkata'))))
 
     if flag=='BUY':
@@ -58,7 +58,7 @@ def Line_Break():
             client.place_order(OrderType='B', Exchange='N', ExchangeType='D', ScripCode=Nifty_Future_Code, Qty=Nifty_Future_Lot, Price=0)
             time.sleep(2)
             client.place_order(OrderType='B', Exchange='N', ExchangeType='D', ScripCode=Nifty_Future_Code, Qty=Nifty_Future_Lot, Price=0)
-            print(' BUY ')
+            print(' BUY Order Placed')
 
     elif flag=='SELL':
 
@@ -66,7 +66,7 @@ def Line_Break():
             client.place_order(OrderType='S', Exchange='N', ExchangeType='D', ScripCode=Nifty_Future_Code, Qty=Nifty_Future_Lot, Price=0)
             time.sleep(2)
             client.place_order(OrderType='S', Exchange='N', ExchangeType='D', ScripCode=Nifty_Future_Code, Qty=Nifty_Future_Lot, Price=0)
-            print(' SELL ')
+            print(' SELL Order Placed')
 
 
 if __name__=='__main__':
