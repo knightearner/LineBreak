@@ -47,7 +47,7 @@ def Line_Break():
     else:
         flag=''
 
-    Nifty_Future_Code=51419361
+    Nifty_Future_Code=51951
     Nifty_Future_Lot=50
     print('Flag Status: ',flag)
     print(str(datetime.now(pytz.timezone('Asia/Kolkata'))))
