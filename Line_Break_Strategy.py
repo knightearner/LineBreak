@@ -5,34 +5,53 @@ import easyimap as e
 import time
 
 
-def Line_Break():
+def buy_login():
+    buy_email_='buy_knightearner@outlook.com'
+
+    buy_password='Debojit@1995'
+
+    server_buy=e.connect('outlook.office365.com',buy_email_,buy_password)
+
+    return server_buy
+
+
+def sell_login():
+    sell_email_='mondaldebojit21@outlook.com'
+
+    sell_password='Rintu!1995'
+
+    server_sell=e.connect('outlook.office365.com',sell_email_,sell_password)
+
+    return server_sell
+
+
+
+def Line_Break(server_buy,server_sell):
 
     time.sleep(15)
     
-    buy_email_='buy_knightearner@outlook.com'
-    sell_email_='mondaldebojit21@outlook.com'
-
-    buy_password='Debojit@1995'
-    sell_password='Rintu!1995'
-
-    server_buy=e.connect('outlook.office365.com',buy_email_,buy_password)
-    server_sell=e.connect('outlook.office365.com',sell_email_,sell_password)
-
     email_buy=server_buy.mail(server_buy.listids()[0])
     email_sell=server_sell.mail(server_sell.listids()[0])
 
 
     format = '%d %b %Y %H:%M'  # The format
-    time_buy= datetime.strptime(email_buy.date[5:22], format)
-    time_sell= datetime.strptime(email_sell.date[5:22], format)
+    time_buy= datetime.strptime(email_buy.date[5:-9], format)
+    time_sell= datetime.strptime(email_sell.date[5:-9], format)
 
     time_now=datetime.now(pytz.timezone('UTC'))
-
+    format='%Y-%m-%d %H:%M'
+    time_now = datetime.strptime(str(time_now)[:16], format)
+    time_now_list=[time_now+timedelta(minutes=i) for i in [-2,-1,0,1,2]]
+    
+    print('TIME NOW : ',time_now)
+    
     flag=''
-    if time_now.date()==time_sell.date() and time_now.minute==time_sell.minute and time_now.hour==time_sell.hour and email_sell.title[7:]=='SELL':
+    if time_sell in time_now_list and email_sell.title[7:]=='SELL':
         flag='SELL'
-    elif time_now.date()==time_buy.date() and time_now.minute==time_buy.minute and time_now.hour==time_buy.hour and email_buy.title[7:]=='BUY':
+        print('TIME SELL : ',time_sell)
+    elif time_buy in time_now_list and email_buy.title[7:]=='BUY':
         flag='BUY'
+        print('TIME BUY : ',time_buy)
     else:
         flag=''
 
@@ -72,11 +91,12 @@ def Line_Break():
 
 
 if __name__=='__main__':
+    server_buy_=buy_login()
+    server_sell_=sell_login()
     while True:
-        if datetime.now(pytz.timezone('Asia/Kolkata')).minute%5==0:
-            if datetime.now(pytz.timezone('Asia/Kolkata')).hour==9 and datetime.now(pytz.timezone('Asia/Kolkata')).minute>=15:
-                Line_Break()
-                time.sleep(280)
-            elif datetime.now(pytz.timezone('Asia/Kolkata')).hour>9 and datetime.now(pytz.timezone('Asia/Kolkata')).hour<16:
-                Line_Break()
-                time.sleep(280)
+        if datetime.now(pytz.timezone('Asia/Kolkata')).hour==9 and datetime.now(pytz.timezone('Asia/Kolkata')).minute>=15:
+                Line_Break(server_buy_,server_sell_)
+                time.sleep(60)
+        elif datetime.now(pytz.timezone('Asia/Kolkata')).hour>9 and datetime.now(pytz.timezone('Asia/Kolkata')).hour<16:
+                Line_Break(server_buy_,server_sell_)
+                time.sleep(60)
