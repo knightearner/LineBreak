@@ -28,8 +28,6 @@ def sell_login():
 
 def Line_Break(server_buy,server_sell):
 
-    time.sleep(15)
-    
     email_buy=server_buy.mail(server_buy.listids()[0])
     email_sell=server_sell.mail(server_sell.listids()[0])
 
