@@ -53,8 +53,8 @@ def Line_Break(server_buy,server_sell):
     else:
         flag=''
 
-    Nifty_Future_Code=51951
-    Nifty_Future_Lot=50
+    Nifty_Future_Code=52309
+    Nifty_Future_Lot=300
     print('Flag Status: ',flag)
     print(str(datetime.now(pytz.timezone('Asia/Kolkata'))))
     
@@ -94,7 +94,7 @@ if __name__=='__main__':
     while True:
         if datetime.now(pytz.timezone('Asia/Kolkata')).hour==9 and datetime.now(pytz.timezone('Asia/Kolkata')).minute>=15:
                 Line_Break(server_buy_,server_sell_)
-                time.sleep(60)
+                time.sleep(10)
         elif datetime.now(pytz.timezone('Asia/Kolkata')).hour>9 and datetime.now(pytz.timezone('Asia/Kolkata')).hour<16:
                 Line_Break(server_buy_,server_sell_)
-                time.sleep(60)
+                time.sleep(10)
