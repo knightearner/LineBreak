@@ -4,9 +4,7 @@ import pytz
 import easyimap as e
 import time
 
-
-
-def login():
+def email_login():
     _email_='mondaldebojit21@outlook.com'
 
     _password='Rintu!1995'
@@ -67,7 +65,7 @@ def Line_Break(server_):
 
 
 if __name__=='__main__':
-    server_=login()
+    server_=email_login()
     
     while True:
         if datetime.now(pytz.timezone('Asia/Kolkata')).hour==9 and datetime.now(pytz.timezone('Asia/Kolkata')).minute>=15:
