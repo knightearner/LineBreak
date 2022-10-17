@@ -4,6 +4,8 @@ import pytz
 import easyimap as e
 import time
 
+
+
 def email_login():
     _email_='mondaldebojit21@outlook.com'
 
@@ -22,15 +24,15 @@ def Line_Break(server_):
     print('TIME NOW : ',time_now)
     
     flag=''
-    if int(email_.title[-2:])==-1:
+    if 'SELL' in email_.body:
         flag='SELL'
-    elif int(email_.title[-2:])==1:
+    elif 'BUY' in email_.body:
         flag='BUY'
     else:
         flag=''
 
-    Nifty_Future_Code=52309
-    Nifty_Future_Lot=300
+    Nifty_Future_Code=51951
+    Nifty_Future_Lot=50
     
     print('Flag Status: ',flag)
     
