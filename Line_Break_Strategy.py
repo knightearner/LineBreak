@@ -84,6 +84,29 @@ def Line_Break(server_):
                     client.place_order(OrderType='S', Exchange='N', ExchangeType='D', ScripCode=Scripcode, Qty=50,
                                        Price=0)
                     print('CE Order Placed')
+            elif nifty_ltp < (Strikerate - 50):
+                if option_type == 'PE':
+                    client.squareoff_all()
+                    l = list(
+                        df[(df['ISIN'] == 'NIFTY') & (df['CpType'] == 'PE') & (df['Underlyer'] == date_)]['Strikerate'])
+                    Strikerate = l[closest_index(l, nifty_ltp)]
+                    Scripcode = (df[
+                        (df['ISIN'] == 'NIFTY') & (df['CpType'] == 'PE') & (df['Strikerate'] == Strikerate) & (
+                                    df['Underlyer'] == date_)]['Scripcode'])
+                    client.place_order(OrderType='S', Exchange='N', ExchangeType='D', ScripCode=Scripcode, Qty=50,
+                                       Price=0)
+                    print('PE Order Placed')
+                elif option_type == 'CE':
+                    client.squareoff_all()
+                    l = list(
+                        df[(df['ISIN'] == 'NIFTY') & (df['CpType'] == 'CE') & (df['Underlyer'] == date_)]['Strikerate'])
+                    Strikerate = l[closest_index(l, nifty_ltp)]
+                    Scripcode = (df[
+                        (df['ISIN'] == 'NIFTY') & (df['CpType'] == 'CE') & (df['Strikerate'] == Strikerate) & (
+                                    df['Underlyer'] == date_)]['Scripcode'])
+                    client.place_order(OrderType='S', Exchange='N', ExchangeType='D', ScripCode=Scripcode, Qty=50,
+                                       Price=0)
+                    print('CE Order Placed')
             elif flag == 'BUY':
                 client.squareoff_all()
                 l = list(
