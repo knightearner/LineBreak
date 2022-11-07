@@ -37,7 +37,7 @@ def Line_Break(server_):
         flag = ''
     print(flag)
 
-    df = pd.read_csv("scripmaster-csv-format.csv")
+    df = pd.read_csv("C:\\Users\\monda\\Downloads\\scripmaster-csv-format.csv")
     date_='10 Nov 2022'
     print('Flag Status: ', flag)
 
@@ -59,8 +59,10 @@ def Line_Break(server_):
 
     for i in client.positions():
         if i['NetQty'] < 0:
-            Strikerate = df.loc[df['Scripcode'] == i['Scripcode']]['Strikerate']
-            option_type = df.loc[df['Scripcode'] == i['Scripcode'], 'CpType']
+            Strikerate = df.loc[df['Scripcode'] == i['ScripCode']]['Strikerate']
+            option_type = df.loc[df['Scripcode'] == i['ScripCode'], 'CpType']
+            Strikerate=(int(Strikerate))
+            option_type=str(option_type)
             if nifty_ltp > (Strikerate + 50):
                 if option_type == 'PE':
                     client.squareoff_all()
