@@ -37,7 +37,7 @@ def Line_Break(server_):
         flag = ''
     print(flag)
 
-    df = pd.read_csv("C:\\Users\\monda\\Downloads\\scripmaster-csv-format.csv")
+    df = pd.read_csv("scripmaster-csv-format.csv")
     date_='17-Nov-22'
     print('Flag Status: ', flag)
 
