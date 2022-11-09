@@ -37,8 +37,8 @@ def Line_Break(server_):
         flag = ''
     print(flag)
 
-    df = pd.read_csv("scripmaster-csv-format.csv")
-    date_='10 Nov 2022'
+    df = pd.read_csv("C:\\Users\\monda\\Downloads\\scripmaster-csv-format.csv")
+    date_='17-Nov-22'
     print('Flag Status: ', flag)
 
     cred = {
@@ -59,17 +59,19 @@ def Line_Break(server_):
 
     for i in client.positions():
         if i['NetQty'] < 0:
+            print(i['NetQty'])
             Strikerate = df.loc[df['Scripcode'] == i['ScripCode']]['Strikerate']
             option_type = df.loc[df['Scripcode'] == i['ScripCode'], 'CpType']
             Strikerate=(int(Strikerate))
-            option_type=str(option_type)
+            option_type=option_type.values[0]
+
             if nifty_ltp > (Strikerate + 50):
+                print('First If')
                 if option_type == 'PE':
                     client.squareoff_all()
-                    l = list(
-                        df[(df['ISIN'] == 'NIFTY') & (df['CpType'] == 'PE') & (df['Underlyer'] == date_)]['Strikerate'])
+                    l = list(df[(df['ISIN'] == 'NIFTY') & (df['CpType'] == 'PE') & (df['Underlyer'] == date_)]['Strikerate'])
                     Strikerate = l[closest_index(l, nifty_ltp)]
-                    Scripcode = (df[
+                    Scripcode = int(df[
                         (df['ISIN'] == 'NIFTY') & (df['CpType'] == 'PE') & (df['Strikerate'] == Strikerate) & (
                                     df['Underlyer'] == date_)]['Scripcode'])
                     client.place_order(OrderType='S', Exchange='N', ExchangeType='D', ScripCode=Scripcode, Qty=50,
@@ -77,22 +79,22 @@ def Line_Break(server_):
                     print('PE Order Placed')
                 elif option_type == 'CE':
                     client.squareoff_all()
-                    l = list(
-                        df[(df['ISIN'] == 'NIFTY') & (df['CpType'] == 'CE') & (df['Underlyer'] == date_)]['Strikerate'])
+                    l = list(df[(df['ISIN'] == 'NIFTY') & (df['CpType'] == 'CE') & (df['Underlyer'] == date_)]['Strikerate'])
                     Strikerate = l[closest_index(l, nifty_ltp)]
-                    Scripcode = (df[
+                    Scripcode = int(df[
                         (df['ISIN'] == 'NIFTY') & (df['CpType'] == 'CE') & (df['Strikerate'] == Strikerate) & (
                                     df['Underlyer'] == date_)]['Scripcode'])
                     client.place_order(OrderType='S', Exchange='N', ExchangeType='D', ScripCode=Scripcode, Qty=50,
                                        Price=0)
                     print('CE Order Placed')
             elif nifty_ltp < (Strikerate - 50):
+                print('Second If')
                 if option_type == 'PE':
                     client.squareoff_all()
                     l = list(
                         df[(df['ISIN'] == 'NIFTY') & (df['CpType'] == 'PE') & (df['Underlyer'] == date_)]['Strikerate'])
                     Strikerate = l[closest_index(l, nifty_ltp)]
-                    Scripcode = (df[
+                    Scripcode = int(df[
                         (df['ISIN'] == 'NIFTY') & (df['CpType'] == 'PE') & (df['Strikerate'] == Strikerate) & (
                                     df['Underlyer'] == date_)]['Scripcode'])
                     client.place_order(OrderType='S', Exchange='N', ExchangeType='D', ScripCode=Scripcode, Qty=50,
@@ -103,29 +105,31 @@ def Line_Break(server_):
                     l = list(
                         df[(df['ISIN'] == 'NIFTY') & (df['CpType'] == 'CE') & (df['Underlyer'] == date_)]['Strikerate'])
                     Strikerate = l[closest_index(l, nifty_ltp)]
-                    Scripcode = (df[
+                    Scripcode = int(df[
                         (df['ISIN'] == 'NIFTY') & (df['CpType'] == 'CE') & (df['Strikerate'] == Strikerate) & (
                                     df['Underlyer'] == date_)]['Scripcode'])
                     client.place_order(OrderType='S', Exchange='N', ExchangeType='D', ScripCode=Scripcode, Qty=50,
                                        Price=0)
                     print('CE Order Placed')
             elif flag == 'BUY' and option_type == 'CE':
+                print('Third If')
                 client.squareoff_all()
                 l = list(
                     df[(df['ISIN'] == 'NIFTY') & (df['CpType'] == 'PE') & (df['Underlyer'] == date_)]['Strikerate'])
                 Strikerate = l[closest_index(l, nifty_ltp)]
-                Scripcode = (df[
+                Scripcode = int(df[
                     (df['ISIN'] == 'NIFTY') & (df['CpType'] == 'PE') & (df['Strikerate'] == Strikerate) & (
                             df['Underlyer'] == date_)]['Scripcode'])
                 client.place_order(OrderType='S', Exchange='N', ExchangeType='D', ScripCode=Scripcode, Qty=50,
                                    Price=0)
                 print('PE Order Placed')
             elif flag == 'SELL' and option_type == 'PE':
+                print('Third If')
                 client.squareoff_all()
                 l = list(
                     df[(df['ISIN'] == 'NIFTY') & (df['CpType'] == 'CE') & (df['Underlyer'] == date_)]['Strikerate'])
                 Strikerate = l[closest_index(l, nifty_ltp)]
-                Scripcode = (df[
+                Scripcode = int(df[
                     (df['ISIN'] == 'NIFTY') & (df['CpType'] == 'CE') & (df['Strikerate'] == Strikerate) & (
                             df['Underlyer'] == date_)]['Scripcode'])
                 client.place_order(OrderType='S', Exchange='N', ExchangeType='D', ScripCode=Scripcode, Qty=50,
