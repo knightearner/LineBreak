@@ -141,7 +141,6 @@ def Line_Break(server_,broker):
 
 if __name__ == '__main__':
     server_ = email_login()
-    Line_Break(server_)
     broker=broker_login()
 
     while True:
