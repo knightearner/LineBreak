@@ -37,7 +37,6 @@ def Line_Break(server_,broker):
 
     time_now = datetime.now(pytz.timezone('Asia/Kolkata'))
     print('TIME NOW : ', time_now)
-
     option=''
     flag = ''
     if 'SELL' in email_.body:
@@ -46,17 +45,45 @@ def Line_Break(server_,broker):
     elif 'BUY' in email_.body:
         flag = 'BUY'
         option='PE'
+    elif 'CLOSE' in email_.body:
+        flag = 'CLOSE'
     else:
         flag = ''
     print(flag)
 
-    df = pd.read_csv("scripmaster-csv-format.csv")
+    df = pd.read_csv("C:\\Users\\monda\\Downloads\\scripmaster-csv-format.csv")
+
+
     date_='17-Nov-22'
     print('Flag Status: ', flag)
 
 
     a = [{"Exchange": "N", "ExchangeType": "C", "Symbol": "NIFTY"}]
     nifty_ltp = (broker.fetch_market_depth_by_symbol(a)['Data'][0]['LastTradedPrice'])
+
+    if broker.positions() == [] :
+        if flag == 'BUY' :
+            l = list(df[(df['ISIN'] == 'NIFTY') & (df['CpType'] == 'PE') & (df['Underlyer'] == date_)]['Strikerate'])
+            Strikerate = l[closest_index(l, nifty_ltp)]
+            Scripcode = int(df[
+                                (df['ISIN'] == 'NIFTY') & (df['CpType'] == 'PE') & (df['Strikerate'] == Strikerate) & (
+                                        df['Underlyer'] == date_)]['Scripcode'])
+            broker.place_order(OrderType='S', Exchange='N', ExchangeType='D', ScripCode=Scripcode, Qty=50,
+                               Price=0)
+            print('PE Order Placed')
+        elif flag == 'SELL' :
+            l = list(df[(df['ISIN'] == 'NIFTY') & (df['CpType'] == 'CE') & (df['Underlyer'] == date_)]['Strikerate'])
+            Strikerate = l[closest_index(l, nifty_ltp)]
+            Scripcode = int(df[
+                                (df['ISIN'] == 'NIFTY') & (df['CpType'] == 'CE') & (df['Strikerate'] == Strikerate) & (
+                                        df['Underlyer'] == date_)]['Scripcode'])
+            broker.place_order(OrderType='S', Exchange='N', ExchangeType='D', ScripCode=Scripcode, Qty=50,
+                               Price=0)
+            print('CE Order Placed')
+
+
+
+
 
     for i in broker.positions():
         if i['NetQty'] < 0:
@@ -65,7 +92,7 @@ def Line_Break(server_,broker):
             option_type = df.loc[df['Scripcode'] == i['ScripCode'], 'CpType']
             Strikerate=(int(Strikerate))
             option_type=option_type.values[0]
-
+            
             if nifty_ltp > (Strikerate + 50):
                 print('First If')
                 if option_type == 'PE':
@@ -125,7 +152,7 @@ def Line_Break(server_,broker):
                                    Price=0)
                 print('PE Order Placed')
             elif flag == 'SELL' and option_type == 'PE':
-                print('Third If')
+                print('Forth If')
                 broker.squareoff_all()
                 l = list(
                     df[(df['ISIN'] == 'NIFTY') & (df['CpType'] == 'CE') & (df['Underlyer'] == date_)]['Strikerate'])
@@ -136,6 +163,10 @@ def Line_Break(server_,broker):
                 broker.place_order(OrderType='S', Exchange='N', ExchangeType='D', ScripCode=Scripcode, Qty=50,
                                    Price=0)
                 print('CE Order Placed')
+            elif flag == 'CLOSE' :
+                print('Fifth If')
+                broker.squareoff_all()
+                print('All Squared OFF')
 
 
 
@@ -145,7 +176,7 @@ if __name__ == '__main__':
 
     while True:
         if datetime.now(pytz.timezone('Asia/Kolkata')).hour == 9 and datetime.now(
-                pytz.timezone('Asia/Kolkata')).minute >= 15:
+                pytz.timezone('Asia/Kolkata')).minute >= 31:
             Line_Break(server_,broker)
             time.sleep(10)
         elif datetime.now(pytz.timezone('Asia/Kolkata')).hour > 9 and datetime.now(
