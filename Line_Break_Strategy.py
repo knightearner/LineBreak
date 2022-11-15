@@ -57,8 +57,9 @@ def Line_Break(server_,broker):
     date_='17-Nov-22'
     print('Flag Status: ', flag)
 
-
-    a = [{"Exchange": "N", "ExchangeType": "C", "Symbol": "NIFTY"}]
+    monthly_date='24 Nov 2022'
+    
+    a = [{"Exchange": "N", "ExchangeType": "D", "Symbol": "NIFTY "+monthly_date}]
     nifty_ltp = (broker.fetch_market_depth_by_symbol(a)['Data'][0]['LastTradedPrice'])
 
     if broker.positions() == [] :
@@ -98,7 +99,7 @@ def Line_Break(server_,broker):
                 if option_type == 'PE':
                     broker.squareoff_all()
                     l = list(df[(df['ISIN'] == 'NIFTY') & (df['CpType'] == 'PE') & (df['Underlyer'] == date_)]['Strikerate'])
-                    Strikerate = l[closest_index(l, nifty_ltp)]
+                    Strikerate = Strikerate + 50
                     Scripcode = int(df[
                         (df['ISIN'] == 'NIFTY') & (df['CpType'] == 'PE') & (df['Strikerate'] == Strikerate) & (
                                     df['Underlyer'] == date_)]['Scripcode'])
@@ -108,7 +109,7 @@ def Line_Break(server_,broker):
                 elif option_type == 'CE':
                     broker.squareoff_all()
                     l = list(df[(df['ISIN'] == 'NIFTY') & (df['CpType'] == 'CE') & (df['Underlyer'] == date_)]['Strikerate'])
-                    Strikerate = l[closest_index(l, nifty_ltp)]
+                    Strikerate = Strikerate + 50
                     Scripcode = int(df[
                         (df['ISIN'] == 'NIFTY') & (df['CpType'] == 'CE') & (df['Strikerate'] == Strikerate) & (
                                     df['Underlyer'] == date_)]['Scripcode'])
@@ -121,7 +122,7 @@ def Line_Break(server_,broker):
                     broker.squareoff_all()
                     l = list(
                         df[(df['ISIN'] == 'NIFTY') & (df['CpType'] == 'PE') & (df['Underlyer'] == date_)]['Strikerate'])
-                    Strikerate = l[closest_index(l, nifty_ltp)]
+                    Strikerate = Strikerate - 50
                     Scripcode = int(df[
                         (df['ISIN'] == 'NIFTY') & (df['CpType'] == 'PE') & (df['Strikerate'] == Strikerate) & (
                                     df['Underlyer'] == date_)]['Scripcode'])
@@ -132,7 +133,7 @@ def Line_Break(server_,broker):
                     broker.squareoff_all()
                     l = list(
                         df[(df['ISIN'] == 'NIFTY') & (df['CpType'] == 'CE') & (df['Underlyer'] == date_)]['Strikerate'])
-                    Strikerate = l[closest_index(l, nifty_ltp)]
+                    Strikerate = Strikerate - 50
                     Scripcode = int(df[
                         (df['ISIN'] == 'NIFTY') & (df['CpType'] == 'CE') & (df['Strikerate'] == Strikerate) & (
                                     df['Underlyer'] == date_)]['Scripcode'])
