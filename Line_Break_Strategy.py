@@ -98,7 +98,7 @@ def Line_Break(server_,broker):
                 print('First If')
                 if option_type == 'PE':
                     broker.squareoff_all()
-                    l = list(df[(df['ISIN'] == 'NIFTY') & (df['CpType'] == 'PE') & (df['Underlyer'] == date_)]['Strikerate'])
+#                     l = list(df[(df['ISIN'] == 'NIFTY') & (df['CpType'] == 'PE') & (df['Underlyer'] == date_)]['Strikerate'])
                     Strikerate = Strikerate + 50
                     Scripcode = int(df[
                         (df['ISIN'] == 'NIFTY') & (df['CpType'] == 'PE') & (df['Strikerate'] == Strikerate) & (
@@ -108,7 +108,7 @@ def Line_Break(server_,broker):
                     print('PE Order Placed')
                 elif option_type == 'CE':
                     broker.squareoff_all()
-                    l = list(df[(df['ISIN'] == 'NIFTY') & (df['CpType'] == 'CE') & (df['Underlyer'] == date_)]['Strikerate'])
+#                     l = list(df[(df['ISIN'] == 'NIFTY') & (df['CpType'] == 'CE') & (df['Underlyer'] == date_)]['Strikerate'])
                     Strikerate = Strikerate + 50
                     Scripcode = int(df[
                         (df['ISIN'] == 'NIFTY') & (df['CpType'] == 'CE') & (df['Strikerate'] == Strikerate) & (
@@ -120,8 +120,7 @@ def Line_Break(server_,broker):
                 print('Second If')
                 if option_type == 'PE':
                     broker.squareoff_all()
-                    l = list(
-                        df[(df['ISIN'] == 'NIFTY') & (df['CpType'] == 'PE') & (df['Underlyer'] == date_)]['Strikerate'])
+#                     l = list(df[(df['ISIN'] == 'NIFTY') & (df['CpType'] == 'PE') & (df['Underlyer'] == date_)]['Strikerate'])
                     Strikerate = Strikerate - 50
                     Scripcode = int(df[
                         (df['ISIN'] == 'NIFTY') & (df['CpType'] == 'PE') & (df['Strikerate'] == Strikerate) & (
@@ -131,8 +130,7 @@ def Line_Break(server_,broker):
                     print('PE Order Placed')
                 elif option_type == 'CE':
                     broker.squareoff_all()
-                    l = list(
-                        df[(df['ISIN'] == 'NIFTY') & (df['CpType'] == 'CE') & (df['Underlyer'] == date_)]['Strikerate'])
+#                     l = list(df[(df['ISIN'] == 'NIFTY') & (df['CpType'] == 'CE') & (df['Underlyer'] == date_)]['Strikerate'])
                     Strikerate = Strikerate - 50
                     Scripcode = int(df[
                         (df['ISIN'] == 'NIFTY') & (df['CpType'] == 'CE') & (df['Strikerate'] == Strikerate) & (
