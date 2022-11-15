@@ -94,7 +94,7 @@ def Line_Break(server_,broker):
             Strikerate=(int(Strikerate))
             option_type=option_type.values[0]
             
-            if nifty_ltp > (Strikerate + 50):
+            if nifty_ltp > (Strikerate + 25):
                 print('First If')
                 if option_type == 'PE':
                     broker.squareoff_all()
@@ -116,7 +116,7 @@ def Line_Break(server_,broker):
                     broker.place_order(OrderType='S', Exchange='N', ExchangeType='D', ScripCode=Scripcode, Qty=50,
                                        Price=0)
                     print('CE Order Placed')
-            elif nifty_ltp < (Strikerate - 50):
+            elif nifty_ltp < (Strikerate - 25):
                 print('Second If')
                 if option_type == 'PE':
                     broker.squareoff_all()
