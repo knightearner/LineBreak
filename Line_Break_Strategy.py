@@ -66,24 +66,36 @@ def Line_Break(server_, broker):
 
     if flag == 'BUY':
         if broker.positions() != []:
-            broker.squareoff_all()
-        l = list(df[(df['ISIN'] == 'NIFTY') & (df['CpType'] == 'CE') & (df['Underlyer'] == date_)]['Strikerate'])
-        Strikerate = (l[closest_index(l, nifty_ltp)]) - 200
-        Scripcode = int(df[(df['ISIN'] == 'NIFTY') & (df['CpType'] == 'CE') & (df['Strikerate'] == Strikerate) & (
-                    df['Underlyer'] == date_)]['Scripcode'])
-        broker.place_order(OrderType='B', Exchange='N', ExchangeType='D', ScripCode=Scripcode, Qty=100,
-                           Price=0)
-        print('CE Order Placed')
+            for i in broker.positions():
+                if i['NetQty']>0:
+                    option_type = df.loc[df['Scripcode'] == i['ScripCode'], 'CpType']
+                    option_type = option_type.values[0]
+            if option_type == 'PE':
+                broker.squareoff_all()
+                l = list(
+                    df[(df['ISIN'] == 'NIFTY') & (df['CpType'] == 'CE') & (df['Underlyer'] == date_)]['Strikerate'])
+                Strikerate = (l[closest_index(l, nifty_ltp)]) - 200
+                Scripcode = int(
+                    df[(df['ISIN'] == 'NIFTY') & (df['CpType'] == 'CE') & (df['Strikerate'] == Strikerate) & (
+                            df['Underlyer'] == date_)]['Scripcode'])
+                broker.place_order(OrderType='B', Exchange='N', ExchangeType='D', ScripCode=Scripcode, Qty=100,
+                                   Price=0)
+                print('CE Order Placed')
     elif flag == 'SELL':
         if broker.positions() != []:
-            broker.squareoff_all()
-        l = list(df[(df['ISIN'] == 'NIFTY') & (df['CpType'] == 'PE') & (df['Underlyer'] == date_)]['Strikerate'])
-        Strikerate = (l[closest_index(l, nifty_ltp)]) + 200
-        Scripcode = int(df[(df['ISIN'] == 'NIFTY') & (df['CpType'] == 'PE') & (df['Strikerate'] == Strikerate) & (
-                    df['Underlyer'] == date_)]['Scripcode'])
-        broker.place_order(OrderType='B', Exchange='N', ExchangeType='D', ScripCode=Scripcode, Qty=100,
-                           Price=0)
-        print('PE Order Placed')
+            for i in broker.positions():
+                if i['NetQty'] > 0:
+                    option_type = df.loc[df['Scripcode'] == i['ScripCode'], 'CpType']
+                    option_type = option_type.values[0]
+            if option_type == 'CE':
+                broker.squareoff_all()
+                l = list(df[(df['ISIN'] == 'NIFTY') & (df['CpType'] == 'PE') & (df['Underlyer'] == date_)]['Strikerate'])
+                Strikerate = (l[closest_index(l, nifty_ltp)]) + 200
+                Scripcode = int(df[(df['ISIN'] == 'NIFTY') & (df['CpType'] == 'PE') & (df['Strikerate'] == Strikerate) & (
+                            df['Underlyer'] == date_)]['Scripcode'])
+                broker.place_order(OrderType='B', Exchange='N', ExchangeType='D', ScripCode=Scripcode, Qty=100,
+                                   Price=0)
+                print('PE Order Placed')
     elif flag == 'CLOSE':
         broker.squareoff_all()
         print('All Squared OFF')
