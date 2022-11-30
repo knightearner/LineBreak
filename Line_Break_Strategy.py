@@ -103,15 +103,23 @@ def Line_Break(server_, broker):
 
 
 if __name__ == '__main__':
-    server_ = email_login()
-    broker = broker_login()
+    
+    f = open("upper.txt", "w")
+    f.write("Now the file has more content!")
+    f.close()
 
-    while True:
-        if datetime.now(pytz.timezone('Asia/Kolkata')).hour == 9 and datetime.now(
-                pytz.timezone('Asia/Kolkata')).minute >= 31:
-            Line_Break(server_, broker)
-            time.sleep(10)
-        elif datetime.now(pytz.timezone('Asia/Kolkata')).hour > 9 and datetime.now(
-                pytz.timezone('Asia/Kolkata')).hour < 16:
-            Line_Break(server_, broker)
-            time.sleep(10)
+    # open and read the file after the appending:
+    f = open("upper.txt", "r")
+    print(f.read())
+#     server_ = email_login()
+#     broker = broker_login()
+
+#     while True:
+#         if datetime.now(pytz.timezone('Asia/Kolkata')).hour == 9 and datetime.now(
+#                 pytz.timezone('Asia/Kolkata')).minute >= 31:
+#             Line_Break(server_, broker)
+#             time.sleep(10)
+#         elif datetime.now(pytz.timezone('Asia/Kolkata')).hour > 9 and datetime.now(
+#                 pytz.timezone('Asia/Kolkata')).hour < 16:
+#             Line_Break(server_, broker)
+#             time.sleep(10)
