@@ -1,6 +1,5 @@
 #import the smtplib library
 import smtplib
-import time
 print('1')
 # creating SMTP server
 server = smtplib.SMTP('smtp-mail.outlook.com',587)
@@ -16,11 +15,9 @@ message = """\
 Subject: Hi there
 
 {'Upper':18900,'Lower':18000}"""
-while True:
-  time.sleep(10)
 
-  # sending the email
-  server.sendmail("mondaldebojit21@outlook.com", "mondaldebojit21@outlook.com", message)
+# sending the email
+server.sendmail("mondaldebojit21@outlook.com", "mondaldebojit21@outlook.com", message)
 
 print("Successfully sent email")
 # terminate the session
