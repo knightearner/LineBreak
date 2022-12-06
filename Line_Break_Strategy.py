@@ -1,5 +1,6 @@
 #import the smtplib library
 import smtplib
+import time
 print('1')
 # creating SMTP server
 server = smtplib.SMTP('smtp-mail.outlook.com',587)
