@@ -15,9 +15,11 @@ message = """\
 Subject: Hi there
 
 {'Upper':18900,'Lower':18000}"""
+while True:
+  time.sleep(10)
 
-# sending the email
-server.sendmail("mondaldebojit21@outlook.com", "mondaldebojit21@outlook.com", message)
+  # sending the email
+  server.sendmail("mondaldebojit21@outlook.com", "mondaldebojit21@outlook.com", message)
 
 print("Successfully sent email")
 # terminate the session
