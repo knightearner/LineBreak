@@ -339,7 +339,7 @@ if __name__ == '__main__':
     server_send = email_send()
     broker = broker_login()
     while True:
-        
+        print('Running')
         if datetime.now(pytz.timezone('Asia/Kolkata')).hour == 9 and datetime.now(pytz.timezone('Asia/Kolkata')).minute >= 16:
             option_sell(server_read,server_send,broker)
             time.sleep(10)
