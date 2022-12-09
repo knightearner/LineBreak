@@ -220,9 +220,10 @@ Subject: Nifty BreakEven Margin
         ce_strike_list=0
         pe_strike_list=0
         delta=0
-        df_oi=oi(weekly_date_)
+        
 
         if nifty_ltp>upper_margin or nifty_ltp<lower_margin:
+            df_oi=oi(weekly_date_)
             
             for i in broker.positions():
 
@@ -275,9 +276,11 @@ Subject: Nifty BreakEven Margin
         ce_strike_list=0
         pe_strike_list=0
         delta=0
-        df_oi=oi(weekly_date_)
+        
         
         if nifty_ltp>upper_margin or nifty_ltp<lower_margin:
+            df_oi=oi(weekly_date_)
+            
             min_=10000
             min_script=0
             for i in broker.positions():
