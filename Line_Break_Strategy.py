@@ -1,4 +1,5 @@
 import requests
+import scipy
 import json
 import math
 import mibian
