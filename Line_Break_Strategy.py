@@ -306,7 +306,7 @@ Subject: Nifty BreakEven Margin
                 broker.place_order(OrderType='S', Exchange='N', ExchangeType='D', ScripCode=CE_Scripcode, Qty=lot,Price=0)
                 for i in broker.positions():
                     if i['ScripCode']==CE_Scripcode:
-                        lower_margin-=i['LTP']+
+                        lower_margin-=i['LTP']
                         lower_margin+=min_
                         break
                 
