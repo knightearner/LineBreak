@@ -168,8 +168,8 @@ def option_sell(server_read,server_send,broker):
     monthly_date = '29 Dec 2022'
     
 
-    a = [{"Exchange": "N", "ExchangeType": "D", "Symbol": "NIFTY " + monthly_date}]
-#     a = [{"Exchange": "N", "ExchangeType": "C", "Symbol": "NIFTY"}]
+#     a = [{"Exchange": "N", "ExchangeType": "D", "Symbol": "NIFTY " + monthly_date}]
+    a = [{"Exchange": "N", "ExchangeType": "C", "Symbol": "NIFTY"}]
     nifty_ltp = (broker.fetch_market_depth_by_symbol(a)['Data'][0]['LastTradedPrice'])
 
     count=0
